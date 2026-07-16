@@ -6,6 +6,12 @@ import (
 	"net/http"
 )
 
+func CreateServer() {
+	router := http.NewServeMux()
+	NewRandomApiHttpHandler(router)
+	http.ListenAndServe(":8080", router)
+}
+
 func getRandomNumber() uint8 {
 	return uint8(rand.Intn(6) + 1)
 }
