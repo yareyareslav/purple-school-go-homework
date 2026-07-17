@@ -12,7 +12,7 @@ type VerifyHandler struct {}
 func NewVerifyHandler(r *http.ServeMux) Handler {
 	handler := &VerifyHandler{}
 
-	r.HandleFunc("GET /verify", handler.Verify())
+	r.HandleFunc("GET /verify/{hash}", handler.Verify())
 	r.HandleFunc("POST /send", handler.Send())
 
 	return handler
