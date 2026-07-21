@@ -56,8 +56,15 @@ func (h *VerifyHandler) Send() http.HandlerFunc {
 		e.To = []string{body.Address}
 		e.Subject = "Hello!"
 		e.Text = []byte("http://localhost:8081/verify/" + newHash)
-		e.Send("smtp.gmail.com:587", smtp.PlainAuth("", body.Email, body.Password, "smtp.gmail.com"))
+		err = e.Send("smtp.gmail.com:587", smtp.PlainAuth("", body.Email, body.Password, "smtp.gmail.com"))
 		
+		if err != nil {
+			res.Json(w, err.Error(), 500)
+			return
+		}
+
 		h.store = newHash
+		
+		res.Json(w, true, 200)
 	}
 }
